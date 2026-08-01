@@ -15,6 +15,7 @@
 - Resume button uses placeholder `href="#"` — no hosted resume PDF yet.
 - Every test run must pass `--watchAll=false` (or `CI=true`) since `react-scripts test` runs in interactive watch mode by default and will hang otherwise: use `CI=true npm test -- --watchAll=false`.
 - Dark MUI theme and CSS custom properties are ported verbatim from the reference repo (same palette, same class-name conventions) — this is a structure/content recreation, not a redesign.
+- `react-router-dom` is pinned to `^6.28.0` — v7 ships ESM-first and fails to transform under CRA's Jest config. Every `BrowserRouter`/`MemoryRouter` instantiation passes `future={{ v7_startTransition: true, v7_relativeSplatPath: true }}` to opt into v7 behavior early and silence the v6 deprecation warnings, keeping test output pristine.
 
 ---
 
@@ -49,7 +50,7 @@ you want to double check.
 
 Run:
 ```bash
-npm install react-router-dom @mui/icons-material classnames sass
+npm install react-router-dom@^6.28.0 @mui/icons-material classnames sass
 ```
 
 - [ ] **Step 2: Add a typecheck script**
@@ -227,7 +228,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
 	<React.StrictMode>
-		<BrowserRouter>
+		<BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<App />
@@ -797,7 +798,7 @@ import Navigation from "./Navigation";
 
 const renderNav = () =>
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Navigation />
 		</MemoryRouter>
 	);
@@ -1085,7 +1086,7 @@ import Footer from "./Footer";
 
 test("renders a contact link and the current year", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Footer />
 		</MemoryRouter>
 	);
@@ -1100,7 +1101,7 @@ test("renders a contact link and the current year", () => {
 
 test("does not render a Source link", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Footer />
 		</MemoryRouter>
 	);
@@ -1228,7 +1229,7 @@ import { PROFILE, EXPERIENCE, CERTIFICATIONS } from "../constants";
 
 test("renders hero content", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Home />
 		</MemoryRouter>
 	);
@@ -1240,7 +1241,7 @@ test("renders hero content", () => {
 
 test("renders one entry per experience item", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Home />
 		</MemoryRouter>
 	);
@@ -1253,7 +1254,7 @@ test("renders one entry per experience item", () => {
 
 test("renders the certifications section", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Home />
 		</MemoryRouter>
 	);
@@ -1267,7 +1268,7 @@ test("renders the certifications section", () => {
 
 test("resume button uses the placeholder link", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Home />
 		</MemoryRouter>
 	);
@@ -1669,7 +1670,7 @@ import { PROFILE } from "../constants";
 
 test("renders email and phone contact cards", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Contact />
 		</MemoryRouter>
 	);
@@ -1685,7 +1686,7 @@ test("renders email and phone contact cards", () => {
 
 test("does not render LinkedIn or GitHub cards", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Contact />
 		</MemoryRouter>
 	);
@@ -1695,7 +1696,7 @@ test("does not render LinkedIn or GitHub cards", () => {
 
 test("has a link back to home", () => {
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Contact />
 		</MemoryRouter>
 	);
@@ -1875,7 +1876,7 @@ import { PROFILE } from "./constants";
 
 test("renders the hero section at /", () => {
 	render(
-		<MemoryRouter initialEntries={["/"]}>
+		<MemoryRouter initialEntries={["/"]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<App />
 		</MemoryRouter>
 	);
@@ -1884,7 +1885,7 @@ test("renders the hero section at /", () => {
 
 test("renders the contact page at /contact", () => {
 	render(
-		<MemoryRouter initialEntries={["/contact"]}>
+		<MemoryRouter initialEntries={["/contact"]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<App />
 		</MemoryRouter>
 	);
