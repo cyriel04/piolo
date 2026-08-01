@@ -4,7 +4,7 @@ import Navigation from "./Navigation";
 
 const renderNav = () =>
 	render(
-		<MemoryRouter>
+		<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
 			<Navigation />
 		</MemoryRouter>
 	);
